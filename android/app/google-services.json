@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50467582380",
+    "project_id": "messagebuddy-a78a2",
+    "storage_bucket": "messagebuddy-a78a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50467582380:android:460515b9e47c6cc49dca09",
+        "android_client_info": {
+          "package_name": "com.example.message_buddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50467582380-ecosgv2qtfotm5u4paa2vnr88jqt8p56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.message_buddy",
+            "certificate_hash": "d6f2aa9bb22662dc31ec10c21b303d34acf180fc"
+          }
+        },
+        {
+          "client_id": "50467582380-53p0ni0h1di2vd2tq4975qvgsdfncnc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGROLQxAXHXsRzYumlzS8UW2TkBGS2dN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50467582380-53p0ni0h1di2vd2tq4975qvgsdfncnc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

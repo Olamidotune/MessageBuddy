@@ -1,0 +1,4 @@
+1. Adding firebase to Android 
+2. To iOS
+3. To Web
+4. firebase.initializeapp() only works for iOS and Android
