@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class Button extends StatelessWidget {
   final String action;
   final Color buttonColor;
-  final void onPressed;
+  final VoidCallback onPressed;
   final bool bordered;
 
   const Button(
@@ -46,7 +46,7 @@ class Button extends StatelessWidget {
               ),
             ),
           ),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Center(
             child: Text(
               action,
