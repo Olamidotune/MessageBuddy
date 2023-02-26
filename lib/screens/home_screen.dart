@@ -9,6 +9,7 @@ import 'package:message_buddy/screens/search_screen.dart';
 import 'package:message_buddy/service/auth_service.dart';
 import 'package:message_buddy/service/database_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
+import 'package:message_buddy/widgets/group_tile.dart';
 import 'package:message_buddy/widgets/snackbar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,13 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
   String userName = '';
   String email = '';
   Stream? groups;
-  final bool _isLoading = false;
+  bool _isLoading = false;
   String groupName = '';
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
+  }
+
+  //string manipulation
+  String getId(String res) {
+    return res.substring(0, res.indexOf('_'));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf('_') + 1);
   }
 
   gettingUserData() async {
@@ -192,7 +202,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       TextField(
                         onChanged: (value) {
                           groupName = value;
-                          print(groupName);
                         },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -235,17 +244,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () async {
                   if (groupName != '') {
                     setState(() {
-                      _isLoading == true;
+                      _isLoading = true;
                     });
                     DataBaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                        .createGroup(
-                      userName,
-                      FirebaseAuth.instance.currentUser!.uid,
-                      groupName,
-                    )
+                        .createGroup(userName,
+                            FirebaseAuth.instance.currentUser!.uid, groupName)
                         // ignore: void_checks
                         .whenComplete(() {
-                      return _isLoading;
+                      return _isLoading = false;
                     });
                     Navigator.of(context).pop();
                     showSnackBar(
@@ -271,7 +277,17 @@ class _HomeScreenState extends State<HomeScreen> {
         if (snapshot.hasData) {
           if (snapshot.data['groups'] != null) {
             if (snapshot.data['groups'].length != 0) {
-              return Text('Hello, Welcome...');
+              return ListView.builder(
+                itemCount: snapshot.data['groups'].length,
+                itemBuilder: (context, index) {
+                  int reverseIndex = snapshot.data['groups'].length - index - 1;
+                  return GroupTile(
+                    groupId: getId(snapshot.data['groups'][reverseIndex]),
+                    groupName: getName(snapshot.data['groups'][reverseIndex]),
+                    userName: snapshot.data['fullname'],
+                  );
+                },
+              );
             } else {
               return noGroupWidget();
             }
@@ -373,5 +389,3 @@ class DrawerButton extends StatelessWidget {
     );
   }
 }
-
-
