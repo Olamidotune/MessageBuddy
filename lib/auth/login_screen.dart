@@ -10,7 +10,7 @@ import 'package:message_buddy/widgets/constants.dart';
 import 'package:sizer/sizer.dart';
 
 import '../helper/helper_functions.dart';
-import '../screens/testing_screen.dart';
+import '../screens/home_screen.dart';
 import '../widgets/snackbar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -139,7 +139,7 @@ class _LoginScreen extends State<LoginScreen> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.of(context)
-                                      .popAndPushNamed(HomeScreen.routeName);
+                                      .popAndPushNamed(RegisterScreen.routeName);
                                 },
                               style: normalText.copyWith(
                                   color: Colors.green,
@@ -176,7 +176,7 @@ class _LoginScreen extends State<LoginScreen> {
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullname']);
 
           if (!mounted) return;
-          Navigator.of(context).popAndPushNamed(TestingScreen.routeName);
+          Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
         } else {
           showSnackBar(context, Colors.red, value);
           setState(() {

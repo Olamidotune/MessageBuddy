@@ -2,7 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:message_buddy/auth/login_screen.dart';
 import 'package:message_buddy/helper/helper_functions.dart';
-import 'package:message_buddy/screens/testing_screen.dart';
+import 'package:message_buddy/screens/home_screen.dart';
+
 
 import 'package:message_buddy/service/auth_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
@@ -11,15 +12,15 @@ import 'package:sizer/sizer.dart';
 
 import '../widgets/button.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = 'HomeScreen';
-  const HomeScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  static const String routeName = 'RegisterScreen';
+  const RegisterScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
   final formKey = GlobalKey<FormState>();
   String fullName = '';
@@ -33,9 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                backgroundColor: Colors.green,
-                semanticsLabel: 'Please wait',
-              ),
+                  backgroundColor: Colors.green, semanticsLabel: 'Please wait',),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -70,7 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                          fullName = value;
+                
+                          fullName =  value ;
+                     
                         },
                         validator: (value) {
                           if (value!.isNotEmpty) {
@@ -191,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(fullName);
           if (!mounted) return;
-          Navigator.of(context).popAndPushNamed(TestingScreen.routeName);
+          Navigator.of(context).popAndPushNamed(HomeScreen.routeName);
         } else {
           showSnackBar(context, Colors.red, value);
           setState(() {

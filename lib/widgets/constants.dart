@@ -36,7 +36,6 @@ final kTextFieldDecoration = InputDecoration(
 
 TextStyle heading = GoogleFonts.ibarraRealNova(
   textStyle: const TextStyle(
-    color: Colors.white,
     fontSize: 35,
     fontWeight: FontWeight.w900,
   ),
@@ -44,23 +43,19 @@ TextStyle heading = GoogleFonts.ibarraRealNova(
 
 TextStyle smallHeading = GoogleFonts.ibarraRealNova(
   textStyle: const TextStyle(
-    color: Colors.white,
     fontSize: 20,
-      fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w400,
   ),
 );
 
-
 TextStyle normalText = GoogleFonts.poppins(
   textStyle: const TextStyle(
-    color: Colors.white,
     fontSize: 14,
   ),
 );
 
 TextStyle buttonText = GoogleFonts.poppins(
   textStyle: const TextStyle(
-    color: Colors.white,
     fontSize: 10,
     fontWeight: FontWeight.w700,
   ),
