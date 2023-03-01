@@ -8,7 +8,6 @@ import 'package:message_buddy/service/database_service.dart';
 import 'package:message_buddy/widgets/button.dart';
 import 'package:message_buddy/widgets/constants.dart';
 import 'package:sizer/sizer.dart';
-
 import '../helper/helper_functions.dart';
 import '../screens/home_screen.dart';
 import '../widgets/snackbar.dart';
@@ -96,7 +95,9 @@ class _LoginScreen extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
-                              obscureText;
+                           setState(() {
+                                obscureText=!obscureText;
+                           });
                             },
                             icon: const Icon(
                               Icons.remove_red_eye_sharp,
@@ -173,6 +174,7 @@ class _LoginScreen extends State<LoginScreen> {
           // saving our value to the shared prefences
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
+          print(snapshot.docs.length);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullname']);
 
           if (!mounted) return;

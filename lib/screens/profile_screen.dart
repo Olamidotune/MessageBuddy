@@ -9,15 +9,16 @@ import '../auth/login_screen.dart';
 import '../helper/helper_functions.dart';
 
 class ProfileScreen extends StatefulWidget {
-  String userName;
-  String email;
+  final String userName;
+ final String email;
 
   static const String routeName = 'Profile Screen';
 
-  ProfileScreen({Key? key, required this.userName, required this.email})
+  const ProfileScreen({Key? key, required this.userName, required this.email})
       : super(key: key);
 
   @override
+
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
@@ -66,7 +67,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 1.h,
             ),
-           
             const Divider(
               thickness: 1,
               color: Colors.black54,
@@ -139,8 +139,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 size: 100,
               ),
             ),
-            const   Divider(color: Colors.black,
-            height: 30,
+            const Divider(
+              color: Colors.black,
+              height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,8 +156,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-           const Divider(color: Colors.black,
-            height: 30,
+            const Divider(
+              color: Colors.black,
+              height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,8 +173,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            const  Divider(color: Colors.black,
-            height: 30,
+            const Divider(
+              color: Colors.black,
+              height: 30,
             ),
           ],
         ),

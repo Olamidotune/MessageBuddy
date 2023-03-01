@@ -139,9 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text('Message Buddy',
-            style:
-                heading.copyWith(fontWeight: FontWeight.bold, fontSize: 20.sp)),
+        title: Text(
+          'Message Buddy',
+          style: heading.copyWith(fontWeight: FontWeight.bold, fontSize: 20.sp),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -225,6 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                       ),
                     ],
                   ),
@@ -310,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(30),
       child: Center(
         child: Text(
-          'Welcome $userName 👋🏾 . Click on the ➕ button to create a group or the 🔎 button to search for a group.',
+          'Welcome $userName 👋🏾 . Click on the "➕" button to create a group or the "🔎" button to search for a group.',
           style: normalText,
           textAlign: TextAlign.center,
         ),

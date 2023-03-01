@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:message_buddy/helper/helper_functions.dart';
+import 'package:message_buddy/screens/chat_screen.dart';
 import 'package:message_buddy/screens/profile_screen.dart';
 import 'package:message_buddy/screens/register_screen.dart';
 import 'package:message_buddy/auth/login_screen.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Sizer(
       builder: (BuildContext context, Orientation orientation,
           DeviceType deviceType) {
@@ -69,10 +71,13 @@ class _MyAppState extends State<MyApp> {
             RegisterScreen.routeName: (context) => const RegisterScreen(),
             HomeScreen.routeName: (context) => const HomeScreen(),
             SearchScreen.routeName: (context) => const SearchScreen(),
-            ProfileScreen.routeName: (context) => ProfileScreen(
-                  email: '',
+            ProfileScreen.routeName: (context) =>
+                ProfileScreen(email: '', userName: ''),
+            ChatScreen.routeName: (context) => const ChatScreen(
+                  groupId: '',
+                  groupName: '',
                   userName: '',
-                ),
+                )
           },
         );
       },
