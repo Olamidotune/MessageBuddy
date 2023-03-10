@@ -63,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios_new),
         ),
         actions: [
           IconButton(

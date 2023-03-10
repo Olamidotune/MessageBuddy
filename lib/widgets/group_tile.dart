@@ -27,12 +27,13 @@ class _GroupTileState extends State<GroupTile> {
     return GestureDetector(
       onTap: () {
         nextScreen(
-            context,
-            ChatScreen(
-              groupId: widget.groupId,
-              groupName: widget.groupName,
-              userName: widget.userName,
-            ));
+          context,
+          ChatScreen(
+            groupId: widget.groupId,
+            groupName: widget.groupName,
+            userName: widget.userName,
+          ),
+        );
       },
       child: ListTile(
         leading: CircleAvatar(

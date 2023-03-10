@@ -34,6 +34,8 @@ class _LoginScreen extends State<LoginScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
+                semanticsLabel: 'Loading...',
+                
                 color: Colors.green,
               ),
             )
@@ -95,9 +97,9 @@ class _LoginScreen extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
-                           setState(() {
-                                obscureText=!obscureText;
-                           });
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
                             },
                             icon: const Icon(
                               Icons.remove_red_eye_sharp,
@@ -139,8 +141,8 @@ class _LoginScreen extends State<LoginScreen> {
                               text: 'Register here',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.of(context)
-                                      .popAndPushNamed(RegisterScreen.routeName);
+                                  Navigator.of(context).popAndPushNamed(
+                                      RegisterScreen.routeName);
                                 },
                               style: normalText.copyWith(
                                   color: Colors.green,
@@ -174,7 +176,6 @@ class _LoginScreen extends State<LoginScreen> {
           // saving our value to the shared prefences
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
-          print(snapshot.docs.length);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullname']);
 
           if (!mounted) return;
@@ -191,8 +192,3 @@ class _LoginScreen extends State<LoginScreen> {
 }
 
 
-
-// a-zA-70-9…a-74-70-9.1#9%¢1*+-/=?1
-// {I}~]+@[a-zA-Z0-9]+\. [a-zA-Z]+"
-
-//
