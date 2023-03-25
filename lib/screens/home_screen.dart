@@ -299,10 +299,19 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else {
           return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.green,
+              child: Center(
+            child: Column(
+              children: [
+                CircularProgressIndicator(
+                  backgroundColor: Colors.green,
+                ),
+                Text(
+                  'Loading...',
+                  style: normalText,
+                )
+              ],
             ),
-          );
+          ));
         }
       },
     );

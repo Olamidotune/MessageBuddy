@@ -34,7 +34,6 @@ class _LoginScreen extends State<LoginScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                semanticsLabel: 'Loading...',
                 
                 color: Colors.green,
               ),
@@ -190,5 +189,3 @@ class _LoginScreen extends State<LoginScreen> {
     }
   }
 }
-
-

@@ -192,23 +192,25 @@ class _SearchScreenState extends State<SearchScreen> {
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.black),
                   child: Center(
-                      child: Text(
-                    'Joined',
-                    style: normalText,
-                  )))
-              : Container(
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.black),
-                child: Center(
-                  child: Text(
-                    'Join Group',
-                    style: normalText,
+                    child: Text(
+                      'Joined',
+                      style: normalText,
+                    ),
                   ),
-                ),
-              )),
+                )
+              : Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.black),
+                  child: Center(
+                    child: Text(
+                      'Join Group',
+                      style: normalText,
+                    ),
+                  ),
+                )),
     );
   }
 }
