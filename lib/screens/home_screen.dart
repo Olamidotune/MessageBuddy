@@ -9,6 +9,7 @@ import 'package:message_buddy/screens/search_screen.dart';
 import 'package:message_buddy/service/auth_service.dart';
 import 'package:message_buddy/service/database_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
+import 'package:message_buddy/widgets/drawer_button.dart';
 import 'package:message_buddy/widgets/group_tile.dart';
 import 'package:message_buddy/widgets/snackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -158,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         elevation: 20,
         tooltip: 'Add groups',
-        backgroundColor: Colors.white30,
+        backgroundColor: Colors.black,
         child: Icon(
           Icons.add,
           color: Colors.white,
@@ -201,6 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextField(
+                        
                         onChanged: (value) {
                           groupName = value;
                         },
@@ -298,20 +300,22 @@ class _HomeScreenState extends State<HomeScreen> {
             return noGroupWidget();
           }
         } else {
-          return Center(
-              child: Center(
-            child: Column(
-              children: [
-                CircularProgressIndicator(
-                  backgroundColor: Colors.green,
-                ),
-                Text(
-                  'Loading...',
-                  style: normalText,
-                )
-              ],
-            ),
-          ));
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.green,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Loading...',
+                style: normalText,
+              )
+            ],
+          );
         }
       },
     );
@@ -322,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(30),
       child: Center(
         child: Text(
-          'Welcome $userName 👋🏾 . Click on the "➕" button to create a group or the "🔎" button to search for a group.',
+          'Welcome $userName 👋🏾 . Click on the "➕" icon to create a group or the "🔎" icon to search for a group.',
           style: normalText,
           textAlign: TextAlign.center,
         ),
@@ -370,34 +374,5 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
-  }
-}
-
-class DrawerButton extends StatelessWidget {
-  final IconData icon;
-  final String action;
-  final VoidCallback onTap;
-  final bool selected;
-
-  const DrawerButton(
-      {super.key,
-      required this.icon,
-      required this.action,
-      required this.onTap,
-      required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      selected: selected,
-      selectedColor: Colors.black,
-      splashColor: Colors.black,
-      onTap: onTap,
-      leading: Icon(icon),
-      title: Text(
-        action,
-        style: normalText,
-      ),
-    );
   }
 }

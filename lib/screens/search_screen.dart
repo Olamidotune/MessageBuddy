@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:message_buddy/helper/helper_functions.dart';
+import 'package:message_buddy/screens/chat_screen.dart';
+import 'package:message_buddy/screens/home_screen.dart';
 import 'package:message_buddy/service/database_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
+import 'package:message_buddy/widgets/snackbar.dart';
 import 'package:sizer/sizer.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -88,18 +91,14 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print('object');
                     initiateSearchMethod();
                   },
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.black54,
-                    ),
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.black.withOpacity(0.3),
                     child: const Icon(
                       Icons.search,
+                      color: Colors.white,
                       size: 25,
                     ),
                   ),
@@ -183,7 +182,40 @@ class _SearchScreenState extends State<SearchScreen> {
         style: normalText,
       ),
       trailing: InkWell(
-          onTap: () async {},
+          onTap: () async {
+            await DataBaseService(uid: user!.uid)
+                .toggleGroupJoin(userName, groupId, groupName);
+            if (isJoined) {
+              setState(() {
+                isJoined = !isJoined;
+                showSnackBar(
+                    context, Colors.green, 'Successfully joined $groupName');
+              });
+
+              Future.delayed(
+                const Duration(seconds: 1),
+                () {
+                  nextScreen(
+                      context,
+                      ChatScreen(
+                          groupId: groupId,
+                          groupName: groupName,
+                          userName: userName));
+                },
+              );
+            } else {
+              setState(() {
+                isJoined = !isJoined;
+                showSnackBar(context, Colors.red, 'You\'ve left $groupName');
+              });
+              Future.delayed(
+                const Duration(seconds: 1),
+                () {
+                  nextScreen(context, const HomeScreen());
+                },
+              );
+            }
+          },
           child: isJoined
               ? Container(
                   height: 40,

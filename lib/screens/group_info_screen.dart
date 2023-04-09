@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:message_buddy/auth/login_screen.dart';
+import 'package:message_buddy/screens/home_screen.dart';
+import 'package:message_buddy/service/auth_service.dart';
 import 'package:message_buddy/service/database_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
 import 'package:message_buddy/widgets/members_tile.dart';
@@ -28,6 +31,9 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
     super.initState();
   }
 
+  AuthService authService = AuthService();
+  User? user;
+
   void getMembers() async {
     DataBaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .getGroupMembers(widget.groupId)
@@ -50,54 +56,88 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Exit',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+                      content: Text(
+                        'Are you sure you want to exit "${widget.groupName}" group?',
+                      ),
+                      actions: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            //to exit the current group.
+                            DataBaseService(
+                              uid: FirebaseAuth.instance.currentUser!.uid,
+                            )
+                                .toggleGroupJoin(
+                                  getName(widget.userName),
+                                  widget.groupId,
+                                  widget.groupName,
+                                )
+                                .whenComplete(
+                                  () => Navigator.of(context)
+                                      .popAndPushNamed(HomeScreen.routeName),
+                                );
+                          },
+                          icon: const Icon(
+                            Icons.done,
+                            color: Colors.green,
+                          ),
+                        )
+                      ],
+                    );
+                  });
+            },
+            icon: const Icon(Icons.logout),
+          )
+        ],
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Group Info',
+          'Group name: ${widget.groupName}',
           style: smallHeading.copyWith(
               fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.black,
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 30,
-                    child: Text(
-                      widget.groupName.substring(0, 1).toUpperCase(),
-                      style: smallHeading.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("Group: ${widget.groupName}", style: smallHeading),
-                      Text('Admin: ${widget.userName}', style: smallHeading),
-                    ],
-                  ),
-                ],
+      body: Column(
+        children: [
+          ListTile(
+            tileColor: Colors.black,
+            leading: CircleAvatar(
+              backgroundColor: Colors.grey,
+              radius: 30,
+              child: Text(
+                widget.groupName.substring(0, 1).toUpperCase(),
+                style: smallHeading.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
               ),
             ),
-            memberList()
-          ],
-        ),
+            title: Text("Group: ${widget.groupName}", style: smallHeading),
+            subtitle: Text('Admin: ${widget.userName}', style: smallHeading),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          memberList()
+        ],
       ),
     );
   }
@@ -115,6 +155,7 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     child: ListTile(
+                      tileColor: Colors.white38,
                       leading: CircleAvatar(
                         radius: 25,
                         child: Text(
@@ -124,6 +165,7 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                       ),
                       title: Text(
                         getName(
+                          //snapshot was 'member' before.
                           snapshot.data['members'][index],
                         ),
                       ),
@@ -133,10 +175,14 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                 },
               );
             } else {
-              return const Center(child: Text('There are no members'));
+              return const Center(
+                child: Text('There are no members'),
+              );
             }
           } else {
-            return const Center(child: Text('There are no members'));
+            return const Center(
+              child: Text('There are no members'),
+            );
           }
         } else {
           return const CircularProgressIndicator(
@@ -147,3 +193,6 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
     );
   }
 }
+
+
+// come back and refactor the admin and member's tile.

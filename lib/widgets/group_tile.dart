@@ -35,22 +35,30 @@ class _GroupTileState extends State<GroupTile> {
           ),
         );
       },
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 25,
-          child: Text(
-            widget.groupName.substring(0, 1).toUpperCase(),
-            style: smallHeading,
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              radius: 25,
+              child: Text(
+                widget.groupName.substring(0, 1).toUpperCase(),
+                style: smallHeading,
+              ),
+            ),
+            title: Text(
+              widget.groupName,
+              style: smallHeading,
+            ),
+            subtitle: Text(
+              'Join the conversation as ${widget.userName}',
+              style: normalText,
+            ),
           ),
-        ),
-        title: Text(
-          widget.groupName,
-          style: smallHeading,
-        ),
-        subtitle: Text(
-          'Join as the conversation as ${widget.userName}',
-          style: normalText,
-        ),
+          const Divider(
+            thickness: 1,
+            color: Colors.black,
+          ),
+        ],
       ),
     );
   }

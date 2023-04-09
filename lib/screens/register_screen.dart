@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:message_buddy/auth/login_screen.dart';
 import 'package:message_buddy/helper/helper_functions.dart';
 import 'package:message_buddy/screens/home_screen.dart';
-
-
 import 'package:message_buddy/service/auth_service.dart';
 import 'package:message_buddy/widgets/constants.dart';
 import 'package:message_buddy/widgets/snackbar.dart';
@@ -26,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String fullName = '';
   String email = '';
   String password = '';
+  bool passwordObscureText = true;
   AuthService authService = AuthService();
 
   @override
@@ -34,7 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                  backgroundColor: Colors.green, semanticsLabel: 'Please wait',),
+                backgroundColor: Colors.green,
+                semanticsLabel: 'Please wait',
+              ),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -69,9 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                
-                          fullName =  value ;
-                     
+                          fullName = value;
                         },
                         validator: (value) {
                           if (value!.isNotEmpty) {
@@ -106,8 +105,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 2.h,
                       ),
-                      TextFormField(
-                        obscureText: true,
+                       TextFormField(
+                        obscureText: passwordObscureText,
                         decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Password',
                           prefixIcon: const Icon(
@@ -115,11 +114,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: Colors.black38,
                           ),
                           suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.remove_red_eye_sharp,
-                              color: Colors.black38,
-                            ),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  passwordObscureText = !passwordObscureText;
+                                },
+                              );
+                            },
+                            icon: passwordObscureText
+                                ? const Icon(
+                                    Icons.visibility_rounded,
+                                    color: Colors.black38,
+                                  )
+                                : const Icon(
+                                    Icons.visibility_off_outlined,
+                                    color: Colors.black38,
+                                  ),
                           ),
                         ),
                         validator: (value) {
@@ -130,8 +140,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                         onChanged: (value) {
-                          print(password);
-
                           password = value;
                         },
                       ),

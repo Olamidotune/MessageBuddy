@@ -24,7 +24,7 @@ class _LoginScreen extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
-  bool obscureText = false;
+  bool obscureText = true;
   bool _isLoading = false;
   AuthService authService = AuthService();
 
@@ -33,12 +33,12 @@ class _LoginScreen extends State<LoginScreen> {
     return Scaffold(
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                
-                color: Colors.green,
+              child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.green,
               ),
             )
           : SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
@@ -88,6 +88,7 @@ class _LoginScreen extends State<LoginScreen> {
                         height: 2.h,
                       ),
                       TextFormField(
+                        obscureText: obscureText,
                         decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Password',
                           prefixIcon: const Icon(
@@ -96,14 +97,21 @@ class _LoginScreen extends State<LoginScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
-                              setState(() {
-                                obscureText = !obscureText;
-                              });
+                              setState(
+                                () {
+                                  obscureText = !obscureText;
+                                },
+                              );
                             },
-                            icon: const Icon(
-                              Icons.remove_red_eye_sharp,
-                              color: Colors.black38,
-                            ),
+                            icon: obscureText
+                                ? const Icon(
+                                    Icons.visibility_rounded,
+                                    color: Colors.black38,
+                                  )
+                                : const Icon(
+                                    Icons.visibility_off_outlined,
+                                    color: Colors.black38,
+                                  ),
                           ),
                         ),
                         validator: (value) {
