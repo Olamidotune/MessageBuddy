@@ -133,7 +133,6 @@ class _LoginScreen extends State<LoginScreen> {
                         buttonColor: Colors.blue,
                         onPressed: () {
                           login();
-                          print('object');
                         },
                       ),
                       SizedBox(

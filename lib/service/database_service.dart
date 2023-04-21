@@ -104,29 +104,39 @@ class DataBaseService {
 
   //joining the group/exit the group.
   Future toggleGroupJoin(
-      String userName, String groupId, String groupName) async {
+      String groupId, String userName, String groupName) async {
+    //doc refrence
     DocumentReference userDocumentReference = userCollection.doc(uid);
     DocumentReference groupDocumentReference = groupCollection.doc(groupId);
 
     DocumentSnapshot documentSnapshot = await userDocumentReference.get();
     List<dynamic> groups = await documentSnapshot['groups'];
 
+    //if user has groups then remove them or rejoin the group
     if (groups.contains('${groupId}_$groupName')) {
       await userDocumentReference.update({
-        'groups': FieldValue.arrayRemove(['${groupId}_$groupName'])
+        'groups': FieldValue.arrayRemove(['${groupId}_$userName'])
       });
       await groupDocumentReference.update({
         'members': FieldValue.arrayRemove(['${uid}_$userName'])
       });
     } else {
       await userDocumentReference.update({
-        'groups': FieldValue.arrayUnion(['${groupId}_$groupName'])
+        'groups': FieldValue.arrayUnion(['${groupId}_$userName'])
       });
-      {
-        await groupDocumentReference.update({
-          'members': FieldValue.arrayUnion(['${uid}_$userName'])
-        });
-      }
+      await groupDocumentReference.update({
+        'members': FieldValue.arrayUnion(['${uid}_$userName'])
+      });
     }
+  }
+
+  // send message function
+  sendMessage(String groupId, Map<String, dynamic> chatMessageData) async {
+    groupCollection.doc(groupId).collection('messages').add(chatMessageData);
+    groupCollection.doc(groupId).update({
+      'recentMessage': chatMessageData['message'],
+      'recentMessageSender': chatMessageData['sender'],
+      'recentMessageTime': chatMessageData['time'].toString()
+    });
   }
 }

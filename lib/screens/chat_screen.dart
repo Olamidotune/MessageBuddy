@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:message_buddy/screens/group_info_screen.dart';
 import 'package:message_buddy/widgets/constants.dart';
+import 'package:message_buddy/widgets/messages_tile.dart';
 import 'package:sizer/sizer.dart';
 import '../service/database_service.dart';
 
@@ -23,10 +24,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  String admin = '';
   Stream<QuerySnapshot>? chats;
-  int age = 10;
-  String todoText = '';
+  String admin = '';
+  TextEditingController messageController = TextEditingController();
 
   @override
   void initState() {
@@ -83,27 +83,83 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(),
+      body: Stack(
+        children: <Widget>[
+          chatMessages(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
+              color: Colors.black.withOpacity(0.1),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      textInputAction: TextInputAction.newline,
+                      controller: messageController,
+                      autofocus: false,
+                      decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Start a message...',
+                        prefixIcon: const Icon(
+                          Icons.message_rounded,
+                          color: Colors.black38,
+                        ),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        sendMessages();
+                      },
+                      icon: const Icon(Icons.send))
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
-  todoPop(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(
-            builder: ((context, setState) {
-              return AlertDialog(
-                title: Row(
-                  children: [],
+  chatMessages() {
+    return StreamBuilder(
+      stream: chats,
+      builder: ( context, AsyncSnapshot <dynamic>snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data['message'].length,
+                itemBuilder: (context, index) {
+                  return MessagesTile(
+                    message: snapshot.data.docs[index]['message'],
+                    sender: snapshot.data.docs[index]['sender'],
+                    sentByMe:
+                        widget.userName == snapshot.data?.docs[index]['sender'],
+                  );
+                },
+              )
+            : Center(
+                child: Text(
+                  'Start a conversation...',
+                  style: smallHeading,
                 ),
-                actions: [
-                  ElevatedButton(onPressed: () {}, child: const Text('data')),
-                  ElevatedButton(onPressed: () {}, child: const Text('done'))
-                ],
               );
-            }),
-          );
-        });
+      },
+    );
+  }
+
+  sendMessages() {
+    if (messageController.text.isNotEmpty) {
+      Map<String, dynamic> chatMessageMap = {
+        'message': messageController.text,
+        'sender': widget.userName,
+        'time': DateTime.now().millisecondsSinceEpoch,
+      };
+      DataBaseService().sendMessage(widget.groupId, chatMessageMap);
+      setState(() {
+        messageController.clear();
+      });
+    }
   }
 }

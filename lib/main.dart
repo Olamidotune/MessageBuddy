@@ -57,11 +57,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Sizer(
       builder: (BuildContext context, Orientation orientation,
           DeviceType deviceType) {
         return MaterialApp(
+          
           themeMode: ThemeMode.dark,
           darkTheme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
             HomeScreen.routeName: (context) => const HomeScreen(),
             SearchScreen.routeName: (context) => const SearchScreen(),
             ProfileScreen.routeName: (context) =>
-                ProfileScreen(email: '', userName: ''),
+                const ProfileScreen(email: '', userName: ''),
             ChatScreen.routeName: (context) => const ChatScreen(
                   groupId: '',
                   groupName: '',

@@ -64,9 +64,9 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text('Exit',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+                      title: const Text('Leave group',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
                       content: Text(
-                        'Are you sure you want to exit "${widget.groupName}" group?',
+                        'Are you sure you want to leave "${widget.groupName}" group?',
                       ),
                       actions: [
                         IconButton(
@@ -109,7 +109,7 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Group name: ${widget.groupName}',
+          widget.groupName,
           style: smallHeading.copyWith(
               fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),

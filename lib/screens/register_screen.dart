@@ -32,12 +32,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(
+              child: CircularProgressIndicator.adaptive(
                 backgroundColor: Colors.green,
                 semanticsLabel: 'Please wait',
               ),
             )
           : SingleChildScrollView(
+            
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
