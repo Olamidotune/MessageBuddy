@@ -165,7 +165,7 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                       ),
                       title: Text(
                         getName(
-                          //snapshot was 'member' before.
+       
                           snapshot.data['members'][index],
                         ),
                       ),

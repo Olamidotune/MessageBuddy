@@ -91,7 +91,7 @@ class _ChatScreenState extends State<ChatScreen> {
             width: MediaQuery.of(context).size.width,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 2.h),
               color: Colors.black.withOpacity(0.1),
               child: Row(
                 children: [
@@ -126,25 +126,45 @@ class _ChatScreenState extends State<ChatScreen> {
   chatMessages() {
     return StreamBuilder(
       stream: chats,
-      builder: ( context, AsyncSnapshot <dynamic>snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data['message'].length,
-                itemBuilder: (context, index) {
-                  return MessagesTile(
-                    message: snapshot.data.docs[index]['message'],
-                    sender: snapshot.data.docs[index]['sender'],
-                    sentByMe:
-                        widget.userName == snapshot.data?.docs[index]['sender'],
-                  );
-                },
-              )
-            : Center(
-                child: Text(
-                  'Start a conversation...',
-                  style: smallHeading,
-                ),
+      builder: (context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (context, index) {
+              return MessagesTile(
+                message: snapshot.data.docs[index]['message'],
+                sender: snapshot.data.docs[index]['sender'],
+                sentByMe:
+                    widget.userName == snapshot.data.docs[index]['sender'],
               );
+            },
+          );
+        } else {
+          return Center(
+            child: Text(
+              'Start a conversation...',
+              style: smallHeading,
+            ),
+          );
+        }
+        // return snapshot.hasData
+        //     ? ListView.builder(
+        //         itemCount: snapshot.data.docs.length,
+        //         itemBuilder: (context, index) {
+        //           return MessagesTile(
+        //             message: snapshot.data.docs[index]['message'],
+        //             sender: snapshot.data.docs[index]['sender'],
+        //             sentByMe:
+        //                 widget.userName == snapshot.data.docs[index]['sender'],
+        //           );
+        //         },
+        //       )
+        //     : Center(
+        //         child: Text(
+        //           'Start a conversation...',
+        //           style: smallHeading,
+        //         ),
+        //       );
       },
     );
   }

@@ -33,12 +33,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.black,
                 semanticsLabel: 'Please wait',
               ),
             )
           : SingleChildScrollView(
-            
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
@@ -106,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 2.h,
                       ),
-                       TextFormField(
+                      TextFormField(
                         obscureText: passwordObscureText,
                         decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Password',
@@ -159,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       Text.rich(
                         TextSpan(
-                          text: "Already have an account?  ",
+                          text: "Already have an account?",
                           style: normalText,
                           children: <TextSpan>[
                             TextSpan(

@@ -79,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       fillColor: Colors.white24,
                       hoverColor: Colors.yellow,
                       hintText: 'Search for groups',
-                      // errorText: 'There is no group with that name found.',
                     ),
                     onChanged: (value) {
                       searchController.text = value;

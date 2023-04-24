@@ -202,7 +202,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextField(
-                        
                         onChanged: (value) {
                           groupName = value;
                         },
@@ -300,21 +299,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return noGroupWidget();
           }
         } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.green,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Loading...',
-                style: normalText,
-              )
-            ],
+          return Center(
+            child: CircularProgressIndicator.adaptive(
+              backgroundColor: Colors.green,
+            ),
           );
         }
       },
